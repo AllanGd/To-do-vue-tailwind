@@ -2,7 +2,7 @@
   <div class="grid-col-3 grid gap-1">
     <div class="col-span-3 grid grid-cols-2 rounded-t-md border-2 border-gray-300 bg-gray-100 p-2 text-lg text-gray-500">
       <span class="col-span-2 row-span-2 mt-2 h-24">{{ tarefa.descricao }}</span>
-      <span class="self-end text-base">Prazo: {{ tarefa.data }}</span>
+      <span class="self-end text-base">Prazo: {{ dataFormatada() }}</span>
       <span class="self-end text-base font-bold text-orange-600 justify-self-end">Próximo do vencimento</span>
     </div>
     <button
@@ -33,28 +33,21 @@
     </button>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { TarefaInterface } from '../assets/interfaces';
 import { useTarefasStore } from '../store/TaskStore';
 
-export default defineComponent({
-  props: {
-    tarefa: {
-      type: Object as () => TarefaInterface,
-      required: true
-    }
-  },
-  setup(props) {
-    const tarefasStore = useTarefasStore();
 
-    const removerTarefa = () => {
-      tarefasStore.deleteTarefa(props.tarefa.id);
-    };
-
-    return {
-      removerTarefa
-    };
+const props = defineProps({
+  tarefa: {
+    type: Object as () => TarefaInterface,
+    required: true
   }
 });
+
+const tarefasStore = useTarefasStore();
+const removerTarefa = () => {
+  tarefasStore.deleteTarefa(props.tarefa.id);
+};
+const dataFormatada = () => props.tarefa.data?.split("-").reverse().join("/");
 </script>
