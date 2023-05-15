@@ -1,5 +1,6 @@
 export interface TarefaInterface {
-    descricao: string;
-    data?: string;
-    concluido: boolean
-  }
+  id: string;
+  descricao: string;
+  data?: string;
+  concluido: boolean;
+}

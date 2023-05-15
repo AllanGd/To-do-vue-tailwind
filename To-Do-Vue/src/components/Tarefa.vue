@@ -22,7 +22,7 @@
       </svg>
       Editar
     </button>
-    <button
+    <button @click="removerTarefa"
       class="col-span-1 rounded-br-md bg-red-400 drop-shadow-md p-1 text-lg font-bold hover:bg-red-500 active:bg-red-600">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="inline h-6 w-6">
@@ -36,18 +36,25 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { TarefaInterface } from '../assets/interfaces';
-
-
+import { useTarefasStore } from '../store/TaskStore';
 
 export default defineComponent({
-  
   props: {
     tarefa: {
       type: Object as () => TarefaInterface,
       required: true
     }
+  },
+  setup(props) {
+    const tarefasStore = useTarefasStore();
+
+    const removerTarefa = () => {
+      tarefasStore.deleteTarefa(props.tarefa.id);
+    };
+
+    return {
+      removerTarefa
+    };
   }
-})
-
-
+});
 </script>
